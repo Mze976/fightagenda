@@ -73,8 +73,13 @@ $("export").addEventListener("click",()=>{const blob=new Blob([JSON.stringify(ca
 $("importBtn").addEventListener("click",()=>$("importFile").click());$("importFile").addEventListener("change",async ev=>{const f=ev.target.files[0];if(!f||!user)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw Error("Le JSON doit contenir un tableau.");setStatus("Import JSON disponible dans le mode de développement. Pour éviter d'écraser le catalogue distant accidentellement, l'import en production doit être validé côté serveur.","error")}catch(e){setStatus("Import impossible : "+e.message,"error")}});
 ["q","discipline","period"].forEach(id=>$(id).addEventListener(id==="q"?"input":"change",render));document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(!b)return;activeTab=b.dataset.tab;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));render()});$("reload").addEventListener("click",()=>{if(supabase)fetchRemote();else{load();$("syncInfo").textContent="Catalogue local rechargé. Aucune source distante connectée."}});
 load();initAuth();
+<script>
+load();
 </script>
-<script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>if(window.supabase) initAuth();</script>
-</body></html>
+<script src="config.js"></script>
+<script>
+initAuth();
+</script>
+</body>
+</html>
