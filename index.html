@@ -458,7 +458,8 @@ function mapRow(r){
 
 async function connect(){
   const cfg = window.FIGHTAGENDA_CONFIG;
-
+console.log("URL Supabase :", cfg?.url);
+console.log("Clé présente :", !!cfg?.anonKey);
   if(!cfg || !cfg.url || !cfg.anonKey){
     setSync('Configuration absente : vérifie config.js, notamment url et anonKey.');
     return false;
