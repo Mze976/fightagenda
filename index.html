@@ -175,7 +175,7 @@ a{color:#ff907e;text-decoration:none}
       </div>
       <div class="muted">Le mot de passe n'est jamais stocké dans ce fichier.</div>
     </div>
-
+<div id="loginStatus" class="status" role="status" aria-live="polite"></div>
     <div id="adminPanel" class="hidden">
       <h3>Ajouter un événement</h3>
       <div class="notice">Un événement en brouillon n'est pas visible par les visiteurs. Vérifie les informations avant de le publier.</div>
@@ -277,8 +277,18 @@ function esc(v){
 }
 
 function setStatus(message, kind=''){
-  $('adminStatus').textContent = message;
-  $('adminStatus').className = 'status ' + kind;
+  const adminStatus = $('adminStatus');
+  const loginStatus = $('loginStatus');
+
+  if(adminStatus){
+    adminStatus.textContent = message;
+    adminStatus.className = 'status ' + kind;
+  }
+
+  if(loginStatus){
+    loginStatus.textContent = message;
+    loginStatus.className = 'status ' + kind;
+  }
 }
 
 function setSync(message){
@@ -395,7 +405,7 @@ function render(){
 function renderAdmin(){
   const logged = !!user && isAdmin;
   $('adminPanel').classList.toggle('hidden', !logged);
-  $('login').classList.toggle('hidden', !!user);
+  $('login').classList.toggle('hidden', !!user && isAdmin);
 
   $('adminToggle').textContent = user
     ? (isAdmin ? 'Administration connectée' : 'Compte non administrateur')
